@@ -1,15 +1,27 @@
-import { ReactNode, useState } from "react";
-import { FaChartBar, FaMoneyBillWave, FaUsers, FaClipboardList } from "react-icons/fa";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { ReactNode, useEffect, useState } from "react";
+import {
+  FaChartBar,
+  FaMoneyBillWave,
+  FaUsers,
+  FaClipboardList,
+} from "react-icons/fa";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 interface Widget {
   title: string;
   value: string;
   icon: ReactNode;
 }
-
 const HomeDashboard = () => {
   const [role, setRole] = useState("brand"); // Can be "brand", "influencer", or "admin"
+  useEffect(() => setRole("influencer"), []);
 
   const widgets: Record<string, Widget[]> = {
     brand: [
@@ -28,7 +40,11 @@ const HomeDashboard = () => {
       { title: "Total Users", value: "10,000", icon: <FaUsers /> },
       { title: "Active Campaigns", value: "350", icon: <FaClipboardList /> },
       { title: "Reports Overview", value: "85 Reports", icon: <FaChartBar /> },
-      { title: "Platform Stats", value: "99.9% Uptime", icon: <FaMoneyBillWave /> },
+      {
+        title: "Platform Stats",
+        value: "99.9% Uptime",
+        icon: <FaMoneyBillWave />,
+      },
     ],
   };
 
@@ -49,7 +65,10 @@ const HomeDashboard = () => {
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {widgets[role].map((widget, index) => (
-        <div key={index} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4">
+        <div
+          key={index}
+          className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4"
+        >
           <div className="text-3xl text-blue-500">{widget.icon}</div>
           <div>
             <h3 className="text-lg font-semibold">{widget.title}</h3>
@@ -66,7 +85,12 @@ const HomeDashboard = () => {
             <XAxis dataKey="month" stroke="#ccc" />
             <YAxis stroke="#ccc" />
             <Tooltip />
-            <Line type="monotone" dataKey="engagement" stroke="#4CAF50" strokeWidth={3} />
+            <Line
+              type="monotone"
+              dataKey="engagement"
+              stroke="#4CAF50"
+              strokeWidth={3}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -76,13 +100,20 @@ const HomeDashboard = () => {
         <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
         <ul className="space-y-2">
           {recentActivity.map((activity, index) => (
-            <li key={index} className="flex items-center space-x-3 bg-gray-100 dark:bg-gray-700 p-3 rounded">
+            <li
+              key={index}
+              className="flex items-center space-x-3 bg-gray-100 dark:bg-gray-700 p-3 rounded"
+            >
               <div className="w-8 h-8 bg-blue-500 text-white flex items-center justify-center rounded-full text-sm font-semibold">
                 {activity.user.charAt(0)}
               </div>
               <div>
-                <span className="font-semibold">{activity.user}</span> {activity.action} 
-                <span className="text-gray-500 text-sm"> ({activity.time})</span>
+                <span className="font-semibold">{activity.user}</span>{" "}
+                {activity.action}
+                <span className="text-gray-500 text-sm">
+                  {" "}
+                  ({activity.time})
+                </span>
               </div>
             </li>
           ))}
