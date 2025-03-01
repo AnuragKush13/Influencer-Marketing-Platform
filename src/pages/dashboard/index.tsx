@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/layouts/DashboardLayout";
 
 const Dashboard = () => {

@@ -67,52 +67,84 @@ const HomeDashboard = () => {
       {widgets[role].map((widget, index) => (
         <div
           key={index}
-          className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4"
+          className="bg-gray-800 p-6 rounded-xl shadow-sm flex items-center space-x-6 border border-gray-700"
         >
-          <div className="text-3xl text-blue-500">{widget.icon}</div>
+          <div className="text-2xl text-gray-400">
+            {widget.icon}
+          </div>
           <div>
-            <h3 className="text-lg font-semibold">{widget.title}</h3>
-            <p className="text-xl font-bold">{widget.value}</p>
+            <h3 className="text-sm font-medium text-gray-400">
+              {widget.title}
+            </h3>
+            <p className="text-lg font-semibold text-white mt-1">
+              {widget.value}
+            </p>
           </div>
         </div>
       ))}
 
       {/* Chart Section */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">Analytics Overview</h3>
+      <div className="col-span-1 md:col-span-2 lg:col-span-2 bg-gray-900 p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold mb-4 text-white">Analytics Overview</h3>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={data}>
-            <XAxis dataKey="month" stroke="#ccc" />
-            <YAxis stroke="#ccc" />
-            <Tooltip />
+            <defs>
+              <linearGradient id="colorEngagement" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#4B5563" stopOpacity={0.1}/>
+                <stop offset="95%" stopColor="#4B5563" stopOpacity={0.01}/>
+              </linearGradient>
+            </defs>
+            <XAxis 
+              dataKey="month" 
+              stroke="#6B7280" 
+              axisLine={false} 
+              tickLine={false} 
+            />
+            <YAxis 
+              stroke="#6B7280" 
+              axisLine={false} 
+              tickLine={false} 
+            />
+            <Tooltip 
+              contentStyle={{
+                backgroundColor: '#1F2937',
+                border: '1px solid #374151',
+                borderRadius: '8px',
+                color: '#F9FAFB'
+              }}
+            />
             <Line
               type="monotone"
               dataKey="engagement"
-              stroke="#4CAF50"
-              strokeWidth={3}
+              stroke="#6B7280"
+              strokeWidth={2}
+              dot={{ stroke: '#6B7280', strokeWidth: 2, fill: '#374151' }}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
       {/* Recent Activity Feed */}
-      <div className="col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-        <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
-        <ul className="space-y-2">
+      <div className="col-span-1 md:col-span-2 lg:col-span-2 bg-gray-900 p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg font-semibold mb-4 text-white">Recent Activity</h3>
+        <ul className="space-y-4">
           {recentActivity.map((activity, index) => (
             <li
               key={index}
-              className="flex items-center space-x-3 bg-gray-100 dark:bg-gray-700 p-3 rounded"
+              className="flex items-center space-x-4 p-3 rounded-lg bg-gray-800"
             >
-              <div className="w-8 h-8 bg-blue-500 text-white flex items-center justify-center rounded-full text-sm font-semibold">
+              <div className="w-8 h-8 bg-gray-700 text-white flex items-center justify-center rounded-full text-sm">
                 {activity.user.charAt(0)}
               </div>
-              <div>
-                <span className="font-semibold">{activity.user}</span>{" "}
-                {activity.action}
-                <span className="text-gray-500 text-sm">
-                  {" "}
-                  ({activity.time})
+              <div className="flex-1">
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium text-white">
+                    {activity.user}
+                  </span>
+                  <span className="text-gray-400">{activity.action}</span>
+                </div>
+                <span className="text-sm text-gray-500">
+                  {activity.time}
                 </span>
               </div>
             </li>
